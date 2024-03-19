@@ -30,9 +30,11 @@ class StocksService {
 
     const { period } = (await stocksModel.getPeriod(ticker))[0];
     const { lastPrice } = (await stocksModel.lastPrice(ticker))[0];
-    const { maxPriceDate, maxPrice} = (await stocksModel.maxPrice(ticker))[0];
-    const { maxPositiveChangeDate, maxPositiveChange } = (await stocksModel.maxPositiveChange(ticker))[0];
-    const { maxVolumeDate, maxVolume } = (await stocksModel.maxVolume(ticker))[0];
+    const { maxPriceDate, maxPrice } = (await stocksModel.maxPrice(ticker))[0];
+    const { maxPositiveChangeDate, maxPositiveChange } =
+      (await stocksModel.maxPositiveChange(ticker))[0];
+    const { maxVolumeDate, maxVolume } =
+      (await stocksModel.maxVolume(ticker))[0];
 
     return [
       { label: "Наименование: ", value: name },
