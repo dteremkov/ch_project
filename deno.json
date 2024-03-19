@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "oak": "jsr:@oak/oak@14.2.0",
+    "clickhouse": "npm:@clickhouse/client-web@0.2.10",
+    "ejs": "https://deno.land/x/dejs@0.10.2/mod.ts"
+  },
+  "compilerOptions": {
+    "lib": ["deno.ns", "dom"]
+  }
+}

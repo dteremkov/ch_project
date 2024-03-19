@@ -1,0 +1,61 @@
+<%- await include(`views/partials/header.ejs`) %>
+
+  <div class="container">
+    <h2>Сводная информация по акции</h2>
+
+    <% tickers.forEach((ticker, index)=> { %>
+      <lightweight-chart
+        id="chart1"
+        autosize
+      ></lightweight-chart>
+    <% }); %>
+  </div>
+
+  <% tickers.forEach((ticker, index)=> { %>
+    <lightweight-chart
+      id="chart1"
+      autosize
+    ></lightweight-chart>
+    <br>
+    <br>
+  <% }); %>
+
+  <% if (tickers.length) { %>
+    <script type="text/javascript" defer>
+      async function getChart() {
+        const chartOptions = { layout: { textColor: 'black', background: { type: 'solid', color: 'white' } }, width: 800, height: 600 };
+        const chart = LightweightCharts.createChart(document.getElementById('chart1'), chartOptions);
+  
+        const candlestickSeries = chart.addCandlestickSeries({
+          upColor: '#26a69a', downColor: '#ef5350', borderVisible: false,
+          wickUpColor: '#26a69a', wickDownColor: '#ef5350',
+        });
+  
+        const response = await fetch(`http://localhost:8000/stocks/candles/<%= tickers[0] %>`);
+        const data = await response.json();
+   
+        candlestickSeries.setData(data);
+        chart.timeScale().fitContent();
+      }
+  
+      getChart();
+
+      async function getInfo() {
+          const response = await fetch(`http://localhost:8000/stocks/info/<%= tickers[0] %>`);
+          const data = await response.json();
+
+          console.log(data);
+
+          data.forEach(x => {
+          const newDiv = document.createElement('div');
+          document.body.appendChild(newDiv);
+          newDiv.innerHTML = x.label + x.value;
+          newDiv.style.fontSize = '20px'
+        });
+        }
+
+        getInfo();
+    </script>
+  <% } %>
+
+  <%- await include(`views/partials/footer.ejs`) %>
